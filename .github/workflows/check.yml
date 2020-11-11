@@ -38,22 +38,19 @@ jobs:
           echo ::set-output name=latest_modemversion::$latest_modem
           echo ::set-output name=need_update::$need_update
 
-      - name: Use Node.js 15
-        if: steps.check.outputs.need_update == 1
-        uses: actions/setup-node@v1
-        with:
-          node-version: 15
-
       - name: Install dependencies
         if: steps.check.outputs.need_update == 1
         run: |
           sudo apt-get update
           sudo apt-get install -y simg2img liblz4-tool
-          sudo npm i -g samfirm
+          wget https://github.com/jesec/SamFirm.NET/releases/latest/download/linux-x64 -O samfirm
+          chmod +x samfirm
 
       - name: Fetch firmware
         if: steps.check.outputs.need_update == 1
-        run: samfirm -m ${{ matrix.model }} -r ${{ matrix.region }}
+        run: |
+          ./samfirm -m ${{ matrix.model }} -r ${{ matrix.region }}
+          rm samfirm
 
       - name: Print directory structure
         if: steps.check.outputs.need_update == 1

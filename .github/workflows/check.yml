@@ -43,7 +43,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y simg2img liblz4-tool
-          wget https://github.com/jesec/SamFirm.NET/releases/latest/download/linux-x64 -O samfirm
+          wget https://github.com/ananjaser1211/SamFirm.NET/releases/latest/download/linux-x64 -O samfirm
           chmod +x samfirm
 
       - name: Fetch firmware
